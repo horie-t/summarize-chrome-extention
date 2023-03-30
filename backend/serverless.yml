@@ -1,0 +1,21 @@
+service: openai-serverless
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-west-2'}
+  profile: ${opt:profile, 'default'}
+  memorySize: 256
+  timeout: 20
+  environment:
+    OPENAI_API_KEY: 'your_openai_api_key'
+
+functions:
+  summarize:
+    handler: handler.summarize
+    events:
+      - http:
+          path: summarize
+          method: post
+          cors: true
